@@ -17,13 +17,13 @@ El proyecto de prueba busca gestionar de manera básica, una base de datos de cl
 
 En términos técnicos, deberás generar 3 endpoints, los cuales deberan retornar las siguientes estructuras (ojo con los arreglos y objetos):
 
-    GET /clients => [{                                        Listar clientes
+    GET /api/clients => [{                                        Listar clientes
 		"id": 1,
 		"email": "admin@example.com",
 		"join_date": "Y-m-d",
 	}]
 	
-	GET /payments?client={id} =>                          Listar pagos de un cliente
+	GET /api/payments?client={id} =>                          Listar pagos de un cliente
 	[
 		{
 			"uuid": "4dc2aa90-744e-46da-aeea-952e211b719d",
@@ -43,7 +43,7 @@ En términos técnicos, deberás generar 3 endpoints, los cuales deberan retorna
 		}
 	]
 	 
-	POST /payments => {                                 Crear un pago en la plataforma
+	POST /api/payments => {                                 Crear un pago en la plataforma
 		"uuid": "1a59549c-0111-4411-86c3-8c3c0f9f0a99",
 		"payment_date": null,
 		"expires_at": "2020-02-26"

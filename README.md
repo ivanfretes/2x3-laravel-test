@@ -47,7 +47,7 @@ En términos técnicos, deberás generar 3 endpoints, los cuales deberan retorna
 		"uuid": "1a59549c-0111-4411-86c3-8c3c0f9f0a99",
 		"payment_date": null,
 		"expires_at": "2020-02-26"
-		"status": "paid",
+		"status": "pending",
 		"user_id": ?,
 		"clp_usd": null,
 	}

@@ -4,6 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Client;
+use App\Http\Resources\ClientCollection;
+
 
 class ClientCtrl extends Controller
 {
@@ -14,7 +17,8 @@ class ClientCtrl extends Controller
      */
     public function index()
     {
-        //
+        $clients = Client::paginate();
+        return $clients;
     }
 
     /**
@@ -35,8 +39,19 @@ class ClientCtrl extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|unique:clients|max:255',
+            'join_date' => 'required'
+        ]);
+
+        $client = new Client;
+        $client->join_date = $request->input('join_date');
+        $client->email = $request->input('join_date');
+        $client->save();
+
+        return $client;
     }
+
 
     /**
      * Display the specified resource.

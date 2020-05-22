@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS dos_x_tres_test;
+CREATE DATABASE dos_x_tres_test CHARACTER SET UTF8mb4 COLLATE utf8mb4_bin;

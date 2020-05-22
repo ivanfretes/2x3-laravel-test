@@ -4,6 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Client;
+use App\Models\Payment;
+use Illuminate\Support\Str;
 
 class PaymentCtrl extends Controller
 {
@@ -12,9 +15,16 @@ class PaymentCtrl extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $userId = $request->input('user_id', NULL);
+        $payment = new Payment;
+
+        if ($userId != NULL && Client::find($userId) != NULL){
+            $payment->where('user_id', $payment);
+        }
+
+        return $payment->paginate();
     }
 
     /**
@@ -35,7 +45,26 @@ class PaymentCtrl extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userId = $request->input('user_id', NULL);
+        if (Client::find($userId) == NULL){
+            response([ 
+                'errors' => 'Client not found'
+            ], 500);
+        }
+
+
+        $payment = new Payment;
+        $payment->uuid = Str::uuid();
+        $payment->payment_date = null;
+        $payment->expires_at = ;
+        $payment->status = 'pending';
+        $payment->user_id = $userId;
+
+        // Aca Hacemos el jobs
+        $payment->float("clp_usd");
+        $payment->save();
+
+        return $payment;
     }
 
     /**

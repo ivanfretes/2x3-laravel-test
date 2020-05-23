@@ -56,7 +56,9 @@ class SetDollarValue implements ShouldQueue
 
                     Log::info("Money value is added / saved");
                 } else {
-                    Log::error('Money value not available or undefined');
+                    throw new Exception(
+                        'Money value not available or undefined'
+                    );
                 }
 
             } else {

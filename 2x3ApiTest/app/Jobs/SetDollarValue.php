@@ -14,10 +14,7 @@ use Illuminate\Support\Facades\Log;
 class SetDollarValue implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-
     protected $payment;
-    protected $date;
 
     /**
      * Create a new job instance.
@@ -39,30 +36,31 @@ class SetDollarValue implements ShouldQueue
      */
     public function handle()
     {
-        $currency = Currency::where('date', $this->payment->payment_date)
+        $paymentDate = $this->payment->payment_date;
+        $currency = Currency::where('date', $paymentDate)
             ->first();
 
         // Set the currency if not exist in the database
         if ($currency === NULL){
-            $dolarObject = getDolarValueByDate(
-                $this->payment->payment_date
-            );      
+            $dolarObject = getDolarValueByDate($paymentDate);      
 
             if ($dolarObject !== NULL){
-                $currency->value = $dolarObject->valor;
-                $currency->date = $this->payment->payment_date;    
+                $newCurrency = new Currency;
+                $newCurrency->value = $dolarObject['value'];
+                $newCurrency->date = $dolarObject['date'];    
+                $newCurrency->save();
 
-                $payment->clp_usd = $dolarObject->valor;
-                $payment->save();
+                $this->payment->clp_usd = $dolarObject['value'];
+                $this->payment->save();
 
-                Log::info("Money value is saved");
+                Log::info("Money value is saved" . $this->payment->id);
             } else {
                 Log::error('Money value is undefined');
             }
 
         } else {
-            $payment->clp_usd = $currency->value;
-            $payment->save();
+            $this->payment->clp_usd = $currency->value;
+            $this->payment->save();
 
             Log::info("Money value is not saved");
         }

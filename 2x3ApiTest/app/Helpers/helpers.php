@@ -50,7 +50,7 @@ function getDolarValueList(){
  * Return value of chilean pesos per one dollar and by Date
  * 
  * @param string
- * @return object<date, string> | NULL
+ * @return Array<date, float> | NULL
  */
 function getDolarValueByDate($date){
 	$dolarList = getDolarValueList();
@@ -59,7 +59,14 @@ function getDolarValueByDate($date){
 	    return isSameDate($moneyObject->fecha, $date);
 	});
 
-	return $dolarObject;
+	if ($dolarObject != NULL){
+		return [
+			'date' => Carbon::parse($date)->copy()->toDateString(),
+			'value' => $dolarObject->valor
+		];
+	}
+
+	return NULL;
 }
 
 

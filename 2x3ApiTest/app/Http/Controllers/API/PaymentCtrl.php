@@ -55,7 +55,7 @@ class PaymentCtrl extends Controller
         $userId = $request->input('user_id', NULL);
         if (Client::find($userId) == NULL){
             return response([ 
-                'errors' => 'Client not found'
+                'errors' => 'Server Error'
             ], 500);
         }
 
@@ -70,7 +70,6 @@ class PaymentCtrl extends Controller
         $payment->clp_usd = NULL;
         $payment->save();
 
-
         SetDollarValue::dispatch($payment);
 
         return $payment;
@@ -84,17 +83,7 @@ class PaymentCtrl extends Controller
      */
     public function show($id)
     {
-
-        /*return ['test' => $moneySerieList->first(function ($moneyDay, $key) {
-            return $moneyDay->fecha;
-        })*/
-
-        //array_map(function($moneyPerDayList), )
-        //return var_dump($moneyPerDay->serie);
-
-
-        $job = new CallDollarValue('dolar');
-        dispatch($job);
+        //
     }
 
     /**

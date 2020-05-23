@@ -7,19 +7,32 @@ API Test Laravel
 - Mysql
 - Laravel 6.x [Laravel Requirements](https://laravel.com/docs/6.x/installation)
 
-### Install and Config
+
+#### Create database
+`sh 
+	$ mysql -u $USER -p < ./database/utils/database.sql 
+`
+
+where $USER is your user of the database or copy this statements
+
+`sql
+	DROP DATABASE IF EXISTS dos_x_tres_test;
+	CREATE DATABASE dos_x_tres_test CHARACTER SET UTF8mb4 COLLATE utf8mb4_bin;
+`
+
+
+#### Install and Config environment
 
 `sh
 	$ composer install 
 	$ composer dump-autoload
 	$ cp .env.example .env
-	$ mysql -u $USER -p -e ./database/utils/database.sql
 	$ php artisan migrate
 	$ php artisan serve
 `
 
 
-#### Execute a Queue Jons
+#### Execute a Queue Jobs
 `sh
 	$ php artisan queue:work --stop-when-empty
 `

@@ -17,10 +17,10 @@ class CreatePaymentTable extends Migration
             $table->bigIncrements('id');
             $table->string('uuid')->unique();
             $table->date('payment_date')->nullable();
-            $table->date('expires_at');
+            $table->date('expires_at')->nullable();
             $table->enum('status', ['pending', 'paid'])->default('pending');
             $table->integer('user_id');
-            $table->float("clp_usd");
+            $table->float("clp_usd")->nullable();
             $table->timestamps();
         });
     }

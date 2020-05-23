@@ -45,8 +45,8 @@ class ClientCtrl extends Controller
         ]);
 
         $client = new Client;
-        $client->join_date = $request->input('join_date');
-        $client->email = $request->input('join_date');
+        $client->join_date = $request->join_date;
+        $client->email = $request->email;
         $client->save();
 
         return $client;

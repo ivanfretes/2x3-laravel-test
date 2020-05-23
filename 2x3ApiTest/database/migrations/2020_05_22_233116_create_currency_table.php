@@ -15,10 +15,10 @@ class CreateCurrencyTable extends Migration
     {
         Schema::create('currencies', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('from');
-            $table->string('to');
+            $table->string('from')->nullable();
+            $table->string('to')->nullable();
             $table->float('value');
-            $table->string('provider');
+            $table->string('provider')->nullable();
             $table->date('date')->unique();
             $table->timestamps();
         });

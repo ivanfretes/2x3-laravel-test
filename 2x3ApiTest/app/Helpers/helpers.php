@@ -20,7 +20,7 @@ function isSameDate($dateA, $dateB){
 
 
 /**
- * Return a body from HTTP Response via Guzzle
+ * Return a content object from HTTP Body Response via Guzzle
  * 
  * @return Object
  */
@@ -54,7 +54,6 @@ function getDolarValueList(){
  */
 function getDolarValueByDate($date){
 	$dolarList = getDolarValueList();
-
 	$dolarObject = $dolarList->first(function ($moneyObject, $key) use ($date) 
 	{
 	    return isSameDate($moneyObject->fecha, $date);

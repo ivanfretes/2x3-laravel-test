@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Payment;
 use Illuminate\Support\Str;
-use App\Jobs\CallDollarValue;
+use App\Jobs\SetDollarValue;
 use Carbon\Carbon;
 
 class PaymentCtrl extends Controller
@@ -54,28 +54,26 @@ class PaymentCtrl extends Controller
     {
         $userId = $request->input('user_id', NULL);
         if (Client::find($userId) == NULL){
-            response([ 
+            return response([ 
                 'errors' => 'Client not found'
             ], 500);
         }
 
-
         $payment = new Payment;
         $payment->uuid = Str::uuid();
-        $payment->payment_date = null;
-        $payment->expires_at = '';
+        $payment->payment_date = $request->input(
+            'payment_date', \Carbon\Carbon::now()->copy()->toDateString()
+        );
+        $payment->expires_at = $request->input('expires_at', NULL);
         $payment->status = 'pending';
         $payment->user_id = $userId;
-
-        // Aca Hacemos el jobs
-
-        $payment->float("clp_usd");
+        $payment->clp_usd = NULL;
         $payment->save();
 
+
+        SetDollarValue::dispatch($payment);
+
         return $payment;
-
-
-        // Event para enviar correo
     }
 
     /**
@@ -86,8 +84,6 @@ class PaymentCtrl extends Controller
      */
     public function show($id)
     {
-        return ['test' => ];
-
 
         /*return ['test' => $moneySerieList->first(function ($moneyDay, $key) {
             return $moneyDay->fecha;

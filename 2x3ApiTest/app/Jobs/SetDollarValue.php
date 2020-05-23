@@ -36,34 +36,13 @@ class SetDollarValue implements ShouldQueue
      */
     public function handle()
     {
-        $paymentDate = $this->payment->payment_date;
-        $currency = Currency::where('date', $paymentDate)
-            ->first();
-
-        // Set the currency if not exist in the database
-        if ($currency === NULL){
-            $dolarObject = getDolarValueByDate($paymentDate);      
-
-            if ($dolarObject !== NULL){
-                $newCurrency = new Currency;
-                $newCurrency->value = $dolarObject['value'];
-                $newCurrency->date = $dolarObject['date'];    
-                $newCurrency->save();
-
-                $this->payment->clp_usd = $dolarObject['value'];
-                $this->payment->save();
-
-                Log::info("Money value is saved" . $this->payment->id);
-            } else {
-                Log::error('Money value is undefined');
-            }
-
-        } else {
-            $this->payment->clp_usd = $currency->value;
-            $this->payment->save();
-
-            Log::info("Money value is not saved");
+        try {
+            
+        } catch (Exception $e) {
+            
         }
+
+        
 
     }
 }

@@ -9,33 +9,33 @@ API Test Laravel
 
 
 #### Create database
-`sh 
+```sh 
 	$ mysql -u $USER -p < ./database/utils/database.sql 
-`
+```
 
-where $USER is your user of the database or copy this statements
+where $USER is your user of the database or copy the below statements
 
-`sql
+```sql
 	DROP DATABASE IF EXISTS dos_x_tres_test;
 	CREATE DATABASE dos_x_tres_test CHARACTER SET UTF8mb4 COLLATE utf8mb4_bin;
-`
+```
 
 
 #### Install and Config environment
 
-`sh
+```sh
 	$ composer install 
 	$ composer dump-autoload
 	$ cp .env.example .env
 	$ php artisan migrate
 	$ php artisan serve
-`
+```
 
 
 #### Execute a Queue Jobs
-`sh
+```sh
 	$ php artisan queue:work --stop-when-empty
-`
+```
 
 
 

@@ -54,22 +54,20 @@ class SetDollarValue implements ShouldQueue
                     $this->payment->clp_usd = $dolarObject['value'];
                     $this->payment->save();
 
-                    Log::info("Money value is saved");
+                    Log::info("Money value is added / saved");
                 } else {
-                    Log::error('Money value is undefined');
+                    Log::error('Money value not available or undefined');
                 }
 
             } else {
                 $this->payment->clp_usd = $currency->value;
                 $this->payment->save();
 
-                Log::info("Money value is not saved");
+                Log::info("Money value is already available");
             }
         } catch (Exception $e) {
-            
+            Log::error($e->getMessage());
         }
-
-        
 
     }
 }

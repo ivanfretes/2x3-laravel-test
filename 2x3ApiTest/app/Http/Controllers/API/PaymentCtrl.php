@@ -24,14 +24,13 @@ class PaymentCtrl extends Controller
      */
     public function index(Request $request)
     {
-        $userId = $request->input('user_id', NULL);
-        $payment = new Payment;
+        $userId = $request->input('client', NULL);
 
-        if ($userId != NULL && Client::find($userId) != NULL){
-            $payment->where('user_id', $payment);
+        if ($userId !== NULL){
+            return Payment::where('user_id', $userId)->get();
         }
 
-        return $payment->paginate();
+        return Payment::all();
     }
 
     /**

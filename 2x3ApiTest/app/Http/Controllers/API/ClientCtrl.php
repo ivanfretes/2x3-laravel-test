@@ -17,8 +17,7 @@ class ClientCtrl extends Controller
      */
     public function index()
     {
-        $clients = Client::paginate();
-        return $clients;
+        return Client::all();
     }
 
     /**

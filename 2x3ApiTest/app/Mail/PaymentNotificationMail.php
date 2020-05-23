@@ -11,14 +11,14 @@ class PaymentNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $client;
+    public $client;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($client)
+    public function __construct(\App\Models\Client $client)
     {
         $this->client = $client;
     }
@@ -30,8 +30,9 @@ class PaymentNotificationMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.payment-notification', [
-            'client' => $this->client
-        ]);
+        return $this->view('emails.payment-notification')
+            ->with([
+                'clientEmail' => $this->client->email
+            ]);
     }
 }

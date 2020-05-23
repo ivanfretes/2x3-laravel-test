@@ -9,6 +9,21 @@ use App\Mail\PaymentNotificationMail;
 
 class PaymentNotificationListener
 {
+
+    /**
+     * The name of the queue the job should be sent to.
+     *
+     * @var string|null
+     */
+    public $queue = 'listeners';
+
+    /**
+     * The time (seconds) before the job should be processed.
+     *
+     * @var int
+     */
+    public $delay = 60;
+
     /**
      * Create the event listener.
      *
@@ -28,7 +43,7 @@ class PaymentNotificationListener
     public function handle(PaymentNotificationEvent $event)
     {
         \Mail::to($event->client->email)->send(
-            new PaymentNotificationMail($event->client->email)
+            new PaymentNotificationMail($event->client)
         );
     }
 }

@@ -52,7 +52,7 @@ class PaymentCtrl extends Controller
     public function store(Request $request)
     {
         $userId = $request->input('user_id', NULL);
-        if (Client::find($userId) == NULL){
+        if (($client = Client::find($userId)) == NULL){
             return response([ 
                 'errors' => 'Server Error'
             ], 500);
@@ -70,6 +70,7 @@ class PaymentCtrl extends Controller
         $payment->save();
 
         SetDollarValue::dispatch($payment);
+        event(new \App\Events\PaymentNotificationEvent($client));
 
         return $payment;
     }

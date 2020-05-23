@@ -14,14 +14,14 @@ class PaymentNotificationEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    protected $client;
+    public $client;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($client)
+    public function __construct(\App\Models\Client $client)
     {
         $this->client = $client;
     }
